@@ -12,22 +12,24 @@ import (
 
 func main() {
 
+	// database instance
 	dbRepository := repositories.NewMemoryDb()
-
+	// instantiate database service
 	srv := services.New(dbRepository)
 
-	apiHandler := handlers.NewHTTPHandler(srv)
+	// bank http handler
+	bankHandler := handlers.NewHTTPHandler(srv)
 
-	x := domain.Health{}
-
-	healthService := services.NewHealth(x)
+	// health service
+	healthService := services.NewHealth(domain.Health{})
+	// health http handler
 	healthHandler := handlers.HTTPHealthHandler{
 		HealthService: healthService,
 	}
 
 	r := mux.NewRouter()
-	r.HandleFunc("/create", apiHandler.Create).Methods(http.MethodPost)
-	r.HandleFunc("/balance/{id}", apiHandler.Balance).Methods(http.MethodGet)
+	r.HandleFunc("/create", bankHandler.Create).Methods(http.MethodPost)
+	r.HandleFunc("/balance/{id}", bankHandler.Balance).Methods(http.MethodGet)
 	r.HandleFunc("/health", healthHandler.HealthCheck).Methods(http.MethodGet)
 	log.Println("listening at port 7000...")
 	panic(http.ListenAndServe(":7000", r))
