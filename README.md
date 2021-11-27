@@ -15,24 +15,18 @@ Go Lang é a linguagem utilizada.
 ├── go.mod
 ├── go.sum
 ├── internal
-│   ├── core
-│   │   ├── domain
-│   │   │   ├── bank
-│   │   │   │   ├── account.go
-│   │   │   │   └── account_test.go
-│   │   │   └── health
-│   │   │       └── health.go
-│   │   ├── ports
-│   │   │   ├── databaseRepository.go
-│   │   │   └── services.go
-│   │   └── services
-│   │       ├── bank-service.go
-│   │       ├── bank-service_test.go
-│   │       └── health-service.go
+│   ├── domain
+│   │   ├── account.go
+│   │   ├── account_test.go
+│   │   └── health.go
 │   ├── handlers
-│   │   ├── bank-handler.go
-│   │   └── health-handler.go
-│   └── repositories
-│       ├── memory-db.go
-│       └── memory-db_test.go
+│   │   ├── bank.go
+│   │   └── health.go
+│   ├── repositories
+│   │   ├── memory-db.go
+│   │   └── memory-db_test.go
+│   └── services
+│       ├── bank-service.go
+│       ├── bank-service_test.go
+│       └── health-service.go
 ```
