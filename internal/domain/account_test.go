@@ -1,11 +1,14 @@
-package bank
+package domain
 
-import "testing"
+import (
+	"github.com/google/uuid"
+	"testing"
+)
 
 func TestAccountBalance(t *testing.T) {
 
 	acc := Account{
-		Id: 1,
+		Id: uuid.New(),
 		Money: 100,
 	}
 
@@ -21,7 +24,7 @@ func TestAccountWithdrawSuccess(t *testing.T) {
 	wanted := 0
 
 	acc := Account{
-		Id: 1,
+		Id: uuid.New(),
 		Money: 100,
 	}
 
@@ -38,7 +41,7 @@ func TestAccountWithdrawSuccess(t *testing.T) {
 func TestAccountWithdrawNoFunds(t *testing.T) {
 
 	acc := Account{
-		Id: 1,
+		Id: uuid.New(),
 		Money: 100,
 	}
 

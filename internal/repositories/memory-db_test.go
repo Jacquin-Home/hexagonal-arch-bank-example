@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"hexagonal-example/internal/core/domain/bank"
+	"hexagonal-example/internal/domain"
 	"reflect"
 	"testing"
 )
@@ -10,7 +10,7 @@ func TestNewMemoryDb(t *testing.T) {
 
 	memDb := NewMemoryDb()
 
-	mockedMemDb := make(map[int]*bank.Account)
+	mockedMemDb := make(map[int]*domain.Account)
 
 	if !reflect.DeepEqual(memDb.instance, mockedMemDb) {
 		t.Errorf("wanted: %v, got: %v", memDb.instance, mockedMemDb)
@@ -28,7 +28,7 @@ func TestMemoryDbGetAccountDoesntExist(t *testing.T) {
 func TestMemoryDbGetAccountExists(t *testing.T) {
 	memDb := NewMemoryDb()
 
-	wanted := bank.Account{
+	wanted := domain.Account{
 		Id: 1,
 		Money: 100,
 	}

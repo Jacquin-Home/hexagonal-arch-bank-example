@@ -2,16 +2,21 @@ package services
 
 import (
 	"github.com/google/uuid"
-	"hexagonal-example/internal/core/domain/bank"
-	"hexagonal-example/internal/core/ports"
+	"hexagonal-example/internal/domain"
+	"hexagonal-example/internal/repositories"
 	"log"
 )
 
-type bankService struct {
-	databaseRepository ports.DatabaseRepository
+type InterfaceBankService interface {
+	Balance(id uuid.UUID) (float64, error)
+	Create(domain.Account) (uuid.UUID, error)
 }
 
-func New(databaseRepository ports.DatabaseRepository) *bankService {
+type bankService struct {
+	databaseRepository repositories.DatabaseRepository
+}
+
+func New(databaseRepository repositories.DatabaseRepository) *bankService {
 	return &bankService{
 		databaseRepository: databaseRepository,
 	}
@@ -40,7 +45,7 @@ func (srv bankService) Balance(id uuid.UUID) (float64, error) {
 	return account.Balance(), nil
 }
 
-func (srv bankService) Create(account bank.Account) (uuid.UUID, error) {
+func (srv bankService) Create(account domain.Account) (uuid.UUID, error) {
 	account.Id = uuid.New()
 	err := srv.databaseRepository.Save(&account)
 	if err != nil {

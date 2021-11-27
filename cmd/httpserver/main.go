@@ -2,10 +2,10 @@ package main
 
 import (
 	"github.com/gorilla/mux"
-	"hexagonal-example/internal/core/domain/health"
-	"hexagonal-example/internal/core/services"
+	"hexagonal-example/internal/domain"
 	"hexagonal-example/internal/handlers"
 	"hexagonal-example/internal/repositories"
+	"hexagonal-example/internal/services"
 	"log"
 	"net/http"
 )
@@ -18,12 +18,9 @@ func main() {
 
 	apiHandler := handlers.NewHTTPHandler(srv)
 
-	x := health.Health{
-		Id: "1",
-	}
-	healthService := services.HealthService{
-		Health: x,
-	}
+	x := domain.Health{}
+
+	healthService := services.NewHealth(x)
 	healthHandler := handlers.HTTPHealthHandler{
 		HealthService: healthService,
 	}

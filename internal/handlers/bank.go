@@ -5,18 +5,18 @@ import (
 	"fmt"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
-	"hexagonal-example/internal/core/domain/bank"
-	"hexagonal-example/internal/core/ports"
+	"hexagonal-example/internal/domain"
+	"hexagonal-example/internal/services"
 	"io/ioutil"
 	"log"
 	"net/http"
 )
 
 type HTTPBankHandler struct {
-	bankService ports.BankServiceInterface
+	bankService services.InterfaceBankService
 }
 
-func NewHTTPHandler (bankService ports.BankServiceInterface) *HTTPBankHandler {
+func NewHTTPHandler(bankService services.InterfaceBankService) *HTTPBankHandler {
 	return &HTTPBankHandler{
 		bankService: bankService,
 	}
@@ -40,7 +40,7 @@ func (h *HTTPBankHandler) Balance(w http.ResponseWriter, r *http.Request) {
 	}
 
 	jsonData := map[string]interface{}{
-		"id": accUuid,
+		"id":      accUuid,
 		"balance": balance,
 	}
 
@@ -59,7 +59,7 @@ func (h *HTTPBankHandler) Create(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 
-	var acc bank.Account
+	var acc domain.Account
 	err = json.Unmarshal(body, &acc)
 	if err != nil {
 		log.Println(err)

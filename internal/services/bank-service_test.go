@@ -1,7 +1,8 @@
 package services
 
 import (
-	"hexagonal-example/internal/core/domain/bank"
+	"github.com/google/uuid"
+	"hexagonal-example/internal/domain"
 	"hexagonal-example/internal/repositories"
 	"reflect"
 	"testing"
@@ -23,8 +24,9 @@ func TestServiceWithdrawFromAccount(t *testing.T) {
 	memDb := repositories.NewMemoryDb()
 	srv := New(memDb)
 
-	acc := bank.Account{
-		Id: 1,
+	id := uuid.New()
+	acc := domain.Account{
+		Id: id,
 		Money: 100,
 	}
 
@@ -33,7 +35,7 @@ func TestServiceWithdrawFromAccount(t *testing.T) {
 		t.Error(err)
 	}
 
-	err = srv.WithdrawFromAccount(1, 100)
+	err = srv.WithdrawFromAccount(id, 100)
 	if err != nil {
 		t.Error(err)
 	}
@@ -50,8 +52,9 @@ func TestServiceBalance(t *testing.T) {
 
 	wanted := 100.1
 
-	acc := bank.Account{
-		Id: 1,
+	id := uuid.New()
+	acc := domain.Account{
+		Id: id,
 		Money: wanted,
 	}
 
@@ -60,7 +63,7 @@ func TestServiceBalance(t *testing.T) {
 		t.Error(err)
 	}
 
-	balance, err := srv.Balance(1)
+	balance, err := srv.Balance(id)
 	if err != nil {
 		t.Error(err)
 	}

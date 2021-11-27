@@ -1,4 +1,4 @@
-package health
+package domain
 
 import (
 	"log"
@@ -6,9 +6,7 @@ import (
 	"time"
 )
 
-type Health struct{
-	Id string
-}
+type Health struct{}
 
 func (h Health) CheckHealth() bool {
 	// check request time
