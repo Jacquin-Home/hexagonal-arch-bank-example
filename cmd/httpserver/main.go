@@ -28,8 +28,8 @@ func main() {
 	}
 
 	r := mux.NewRouter()
-	r.HandleFunc("/create", bankHandler.Create).Methods(http.MethodPost)
-	r.HandleFunc("/balance/{id}", bankHandler.Balance).Methods(http.MethodGet)
+	r.HandleFunc("/account/create", bankHandler.Create).Methods(http.MethodPost)
+	r.HandleFunc("/account/balance/{id}", bankHandler.Balance).Methods(http.MethodGet)
 	r.HandleFunc("/health", healthHandler.HealthCheck).Methods(http.MethodGet)
 	log.Println("listening at port 7000...")
 	panic(http.ListenAndServe(":7000", r))
