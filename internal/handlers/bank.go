@@ -6,17 +6,16 @@ import (
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	"hexagonal-example/internal/domain"
-	"hexagonal-example/internal/services"
 	"io/ioutil"
 	"log"
 	"net/http"
 )
 
 type HTTPBankHandler struct {
-	bankService services.InterfaceBankService
+	bankService domain.InterfaceBankService
 }
 
-func NewHTTPHandler(bankService services.InterfaceBankService) *HTTPBankHandler {
+func NewHTTPHandler(bankService domain.InterfaceBankService) *HTTPBankHandler {
 	return &HTTPBankHandler{
 		bankService: bankService,
 	}

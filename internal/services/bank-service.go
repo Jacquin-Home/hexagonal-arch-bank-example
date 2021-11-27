@@ -7,11 +7,6 @@ import (
 	"log"
 )
 
-type InterfaceBankService interface {
-	Balance(id uuid.UUID) (float64, error)
-	Create(domain.Account) (uuid.UUID, error)
-}
-
 type bankService struct {
 	databaseRepository repositories.DatabaseRepository
 }

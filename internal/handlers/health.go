@@ -2,12 +2,12 @@ package handlers
 
 import (
 	"encoding/json"
-	"hexagonal-example/internal/services"
+	"hexagonal-example/internal/domain"
 	"net/http"
 )
 
 type HTTPHealthHandler struct {
-	HealthService services.InterfaceHealth
+	HealthService domain.InterfaceHealth
 }
 
 func (h HTTPHealthHandler) HealthCheck(w http.ResponseWriter, r *http.Request) {

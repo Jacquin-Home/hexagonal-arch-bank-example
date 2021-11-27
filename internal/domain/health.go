@@ -6,6 +6,10 @@ import (
 	"time"
 )
 
+type InterfaceHealth interface {
+	IsAppHealthy() bool
+}
+
 type Health struct{}
 
 func (h Health) CheckHealth() bool {

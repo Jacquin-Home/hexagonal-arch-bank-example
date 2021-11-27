@@ -4,10 +4,6 @@ import (
 	"hexagonal-example/internal/domain"
 )
 
-type InterfaceHealth interface {
-	IsAppHealthy() bool
-}
-
 type service struct {
 	Health domain.Health
 }
