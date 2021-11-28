@@ -21,7 +21,7 @@ func NewHTTPPaymentHandler(paymentService PaymentInterface) *HTTPPaymentHandler 
 	}
 }
 
-func (srv *HTTPPaymentHandler) RegisterPayment(w http.ResponseWriter, r *http.Request) {
+func (srv HTTPPaymentHandler) RegisterPayment(w http.ResponseWriter, r *http.Request) {
 	payment := domain.Payment{
 		Id:    uuid.New(),
 		Money: 100,

@@ -26,12 +26,12 @@ func NewHTTPHandler(accountService AccountServiceInterface) *HTTPAccountHandler 
 	}
 }
 
-func (h *HTTPAccountHandler) SendSMS(w http.ResponseWriter, r *http.Request) {
+func (h HTTPAccountHandler) SendSMS(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("smsSent")
 	w.Write([]byte("ok"))
 }
 
-func (h *HTTPAccountHandler) Balance(w http.ResponseWriter, r *http.Request) {
+func (h HTTPAccountHandler) Balance(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 
@@ -54,7 +54,7 @@ func (h *HTTPAccountHandler) Balance(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *HTTPAccountHandler) Create(w http.ResponseWriter, r *http.Request) {
+func (h HTTPAccountHandler) Create(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 

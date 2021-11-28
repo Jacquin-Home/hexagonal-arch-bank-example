@@ -32,7 +32,7 @@ func NewSqliteDB() *sqliteDB {
 	}
 }
 
-func (db *sqliteDB) GetAccount(accountId uuid.UUID) (*domain.Account, error) {
+func (db sqliteDB) GetAccount(accountId uuid.UUID) (*domain.Account, error) {
 	stmt := `
 		SELECT id, money
 		  FROM account
@@ -50,7 +50,7 @@ func (db *sqliteDB) GetAccount(accountId uuid.UUID) (*domain.Account, error) {
 	return &account, nil
 }
 
-func (db *sqliteDB) SaveAccount(account *domain.Account) error {
+func (db sqliteDB) SaveAccount(account *domain.Account) error {
 	stmt := `
 		INSERT INTO account (id, money)
 			 VALUES ($1, $2);
@@ -64,6 +64,6 @@ func (db *sqliteDB) SaveAccount(account *domain.Account) error {
 	return nil
 }
 
-func (db *sqliteDB) SavePayment(payment domain.Payment) error {
+func (db sqliteDB) SavePayment(payment domain.Payment) error {
 	return nil
 }
