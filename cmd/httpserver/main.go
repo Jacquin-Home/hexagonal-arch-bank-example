@@ -13,7 +13,8 @@ import (
 func main() {
 
 	// database instance
-	dbRepository := repositories.NewMemoryDb()
+	//dbRepository := repositories.NewMemoryDb()
+	dbRepository := repositories.NewSqliteDB()
 	// instantiate database service
 	accService := services.NewAccountService(dbRepository)
 
