@@ -2,7 +2,6 @@ package repositories
 
 import (
 	"database/sql"
-	"fmt"
 	"github.com/google/uuid"
 	_ "github.com/mattn/go-sqlite3"
 	"hexagonal-example/internal/domain"
@@ -19,16 +18,14 @@ func NewSqliteDB() *sqliteDB {
 		panic(err)
 	}
 
-	// temporary:
-	ex, err := db.Exec(`
+	// todo: add migration
+	_, err = db.Exec(`
 		DROP TABLE IF EXISTS account;
 		CREATE TABLE account (
 					  id TEXT,
 					  money INT
 					 );
 	`)
-	fmt.Println(ex.RowsAffected())
-	// end temporary
 
 	return &sqliteDB{
 		sqlite: db,
@@ -54,19 +51,16 @@ func (db *sqliteDB) GetAccount(accountId uuid.UUID) (*domain.Account, error) {
 }
 
 func (db *sqliteDB) SaveAccount(account *domain.Account) error {
-	fmt.Println("save:")
-	fmt.Println(account.Id)
 	stmt := `
 		INSERT INTO account (id, money)
 			 VALUES ($1, $2);
 	`
-	exec, err := db.sqlite.Exec(stmt, account.Id, account.Money)
+	_, err := db.sqlite.Exec(stmt, account.Id, account.Money)
 	if err != nil {
 		log.Println(err)
 		return err
 	}
 
-	fmt.Println(exec.RowsAffected())
 	return nil
 }
 

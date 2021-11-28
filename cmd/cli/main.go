@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/google/uuid"
+	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"hexagonal-example/internal/domain"
 	"hexagonal-example/internal/repositories"
@@ -13,20 +13,12 @@ func main() {
 	//dbRepository := repositories.NewMemoryDb()
 	dbRepository := repositories.NewSqliteDB()
 
-	id := uuid.New()
 	acc := domain.Account{
-		Id:    id,
 		Money: 100,
 	}
 
-	//err := dbRepository.saveAccount(&acc)
-	//if err != nil {
-	//	log.Println(err)
-	//	return
-	//}
-
 	srv := services.NewAccountService(dbRepository)
-	_, err := srv.Create(acc)
+	id, err := srv.Create(acc)
 	if err != nil {
 		log.Println(err)
 	}
@@ -36,12 +28,12 @@ func main() {
 		return
 	}
 
-	//balance, err := srv.Balance(acc.Id)
-	//if err != nil {
-	//	log.Println(err)
-	//	return
-	//}
-	//
-	//fmt.Println(balance)
+	balance, err := srv.Balance(id)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	fmt.Println(balance)
 
 }
