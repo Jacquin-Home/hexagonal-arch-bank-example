@@ -5,11 +5,6 @@ import (
 	"github.com/google/uuid"
 )
 
-type InterfaceBankService interface {
-	Balance(id uuid.UUID) (float64, error)
-	Create(Account) (uuid.UUID, error)
-}
-
 type Account struct {
 	Id    uuid.UUID
 	Money float64

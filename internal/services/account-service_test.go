@@ -10,9 +10,9 @@ import (
 
 func TestNew(t *testing.T) {
 	memDb := repositories.NewMemoryDb()
-	srv := New(memDb)
+	srv := NewAccountService(memDb)
 
-	srvInstance := &bankService{}
+	srvInstance := &accountService{}
 
 	if reflect.TypeOf(srv) != reflect.TypeOf(srvInstance) {
 		t.Errorf("wanted: instance of *services, got: instance of %v", reflect.TypeOf(srvInstance))
@@ -22,15 +22,15 @@ func TestNew(t *testing.T) {
 func TestServiceWithdrawFromAccount(t *testing.T) {
 
 	memDb := repositories.NewMemoryDb()
-	srv := New(memDb)
+	srv := NewAccountService(memDb)
 
 	id := uuid.New()
 	acc := domain.Account{
-		Id: id,
+		Id:    id,
 		Money: 100,
 	}
 
-	err := srv.databaseRepository.Save(&acc)
+	err := srv.accountRepository.Save(&acc)
 	if err != nil {
 		t.Error(err)
 	}
@@ -48,17 +48,17 @@ func TestServiceWithdrawFromAccount(t *testing.T) {
 func TestServiceBalance(t *testing.T) {
 
 	memDb := repositories.NewMemoryDb()
-	srv := New(memDb)
+	srv := NewAccountService(memDb)
 
 	wanted := 100.1
 
 	id := uuid.New()
 	acc := domain.Account{
-		Id: id,
+		Id:    id,
 		Money: wanted,
 	}
 
-	err := srv.databaseRepository.Save(&acc)
+	err := srv.accountRepository.Save(&acc)
 	if err != nil {
 		t.Error(err)
 	}

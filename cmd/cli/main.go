@@ -13,17 +13,17 @@ func main() {
 	dbRepository := repositories.NewMemoryDb()
 
 	acc := domain.Account{
-		Id: uuid.New(),
+		Id:    uuid.New(),
 		Money: 100,
 	}
 
-	err := dbRepository.Save(&acc)
+	err := dbRepository.SaveAccount(&acc)
 	if err != nil {
 		log.Println(err)
 		return
 	}
 
-	srv := services.New(dbRepository)
+	srv := services.NewAccountService(dbRepository)
 	err = srv.WithdrawFromAccount(uuid.New(), 50)
 	if err != nil {
 		log.Println(err)

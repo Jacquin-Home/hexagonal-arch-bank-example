@@ -12,8 +12,8 @@ func TestNewMemoryDb(t *testing.T) {
 
 	mockedMemDb := make(map[int]*domain.Account)
 
-	if !reflect.DeepEqual(memDb.instance, mockedMemDb) {
-		t.Errorf("wanted: %v, got: %v", memDb.instance, mockedMemDb)
+	if !reflect.DeepEqual(memDb.account, mockedMemDb) {
+		t.Errorf("wanted: %v, got: %v", memDb.account, mockedMemDb)
 	}
 }
 
@@ -29,7 +29,7 @@ func TestMemoryDbGetAccountExists(t *testing.T) {
 	memDb := NewMemoryDb()
 
 	wanted := domain.Account{
-		Id: 1,
+		Id:    1,
 		Money: 100,
 	}
 

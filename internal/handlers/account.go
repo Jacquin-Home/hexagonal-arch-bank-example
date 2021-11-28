@@ -11,29 +11,34 @@ import (
 	"net/http"
 )
 
-type HTTPBankHandler struct {
-	bankService domain.InterfaceBankService
+type AccountServiceInterface interface {
+	Balance(id uuid.UUID) (float64, error)
+	Create(domain.Account) (uuid.UUID, error)
 }
 
-func NewHTTPHandler(bankService domain.InterfaceBankService) *HTTPBankHandler {
-	return &HTTPBankHandler{
-		bankService: bankService,
+type HTTPAccountHandler struct {
+	accountService AccountServiceInterface
+}
+
+func NewHTTPHandler(accountService AccountServiceInterface) *HTTPAccountHandler {
+	return &HTTPAccountHandler{
+		accountService: accountService,
 	}
 }
 
-func (h *HTTPBankHandler) SendSMS(w http.ResponseWriter, r *http.Request) {
+func (h *HTTPAccountHandler) SendSMS(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("smsSent")
 	w.Write([]byte("ok"))
 }
 
-func (h *HTTPBankHandler) Balance(w http.ResponseWriter, r *http.Request) {
+func (h *HTTPAccountHandler) Balance(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 
 	pathVars := mux.Vars(r)
 	id := pathVars["id"]
 	accUuid := uuid.MustParse(id)
-	balance, err := h.bankService.Balance(accUuid)
+	balance, err := h.accountService.Balance(accUuid)
 	if err != nil {
 		log.Println(err)
 	}
@@ -49,7 +54,7 @@ func (h *HTTPBankHandler) Balance(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *HTTPBankHandler) Create(w http.ResponseWriter, r *http.Request) {
+func (h *HTTPAccountHandler) Create(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 
@@ -64,7 +69,7 @@ func (h *HTTPBankHandler) Create(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 
-	newId, err := h.bankService.Create(acc)
+	newId, err := h.accountService.Create(acc)
 	if err != nil {
 		log.Println(err)
 	}

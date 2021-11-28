@@ -6,10 +6,6 @@ import (
 	"time"
 )
 
-type InterfaceHealth interface {
-	IsAppHealthy() bool
-}
-
 type Health struct{}
 
 func (h Health) CheckHealth() bool {
@@ -28,6 +24,6 @@ func calculateRequestToExternalService() (int, error) {
 	min := 1000
 	max := 10000
 	rand.Seed(time.Now().UnixNano())
-	result := rand.Intn(max - min) + min
+	result := rand.Intn(max-min) + min
 	return result, nil
 }
