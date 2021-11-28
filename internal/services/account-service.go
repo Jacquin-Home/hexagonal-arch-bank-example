@@ -6,7 +6,6 @@ import (
 	"log"
 )
 
-// AccountRepositoryInterface _
 type AccountRepositoryInterface interface {
 	GetAccount(accountId uuid.UUID) (*domain.Account, error)
 	SaveAccount(account *domain.Account) error
